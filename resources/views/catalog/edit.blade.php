@@ -1,42 +1,47 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h2>Modificar película</h2>
-            
-            <form action="{{ url('catalog/' . $id) }}" method="POST">
-                @csrf
-                @method('PUT')
-                
-                <div class="form-group">
-                    <label for="title">Título</label>
-                    <input type="text" class="form-control" id="title" name="title" value="{{ $pelicula['title'] }}" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="year">Año</label>
-                    <input type="number" class="form-control" id="year" name="year" value="{{ $pelicula['year'] }}" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="director">Director</label>
-                    <input type="text" class="form-control" id="director" name="director" value="{{ $pelicula['director'] }}" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="poster">URL del póster</label>
-                    <input type="url" class="form-control" id="poster" name="poster" value="{{ $pelicula['poster'] }}" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="synopsis">Sinopsis</label>
-                    <textarea class="form-control" id="synopsis" name="synopsis" rows="5" required>{{ $pelicula['synopsis'] }}</textarea>
-                </div>
-                
-                <button type="submit" class="btn btn-primary">Modificar película</button>
-                <a href="{{ url('/catalog/show/' . $id) }}" class="btn btn-secondary">Cancelar</a>
-            </form>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header text-center">Modificar película</div>
+            <div class="card-body" style="padding:30px">
+                <form action="" method="POST">
+                    @csrf
+                    {{-- Por ahora dejamos el action vacío ya que solo estamos mostrando los datos --}}
+                    <div class="form-group mb-3">
+                        <label for="title">Título</label>
+                        <input type="text" name="title" id="title" class="form-group mb-3" value="{{ $pelicula->title }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="year">Año</label>
+                        <input type="text" name="year" id="year" class="form-group mb-3" value="{{ $pelicula->year }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="director">Director</label>
+                        <input type="text" name="director" id="director" class="form-group mb-3" value="{{ $pelicula->director }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="poster">URL Poster</label>
+                        <input type="text" name="poster" id="poster" class="form-group mb-3" value="{{ $pelicula->poster }}">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="synopsis">Resumen</label>
+                        <textarea name="synopsis" id="synopsis" class="form-control" rows="3">{{ $pelicula->synopsis }}</textarea>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">
+                            Modificar película
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+</div>
 @endsection
