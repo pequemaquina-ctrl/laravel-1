@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
+use App\Http\Controllers\Controllers;
+use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
-    public function getHome()
-    {
+    public function getHome() {
+    if(Auth::check()) {
         return redirect('/catalog');
+    } else {
+        return redirect('/login');
     }
+}
 }

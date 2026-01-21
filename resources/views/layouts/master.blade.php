@@ -24,24 +24,23 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">VideoClub</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/catalog') }}">Catálogo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/catalog/create') }}">Añadir película</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    @if( Auth::check() )
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/catalog') }}">Catálogo</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/catalog/create') }}">Nueva Película</a>
+        </li>
+        <li class="nav-item">
+            {{-- Formulario de Logout (Breeze lo suele traer hecho) --}}
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="nav-link btn btn-link">Cerrar sesión</button>
+            </form>
+        </li>
+    </ul>
+@endif
 
     <div class="container">
         @yield('content')

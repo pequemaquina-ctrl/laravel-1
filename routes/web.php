@@ -1,22 +1,44 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CatalogController;
+use Illuminate\Support\Facades\Route;
 
-// Ruta principal - redirige al catálogo
+/*
+|--------------------------------------------------------------------------
+| Rutas del Videoclub
+|--------------------------------------------------------------------------
+*/
+
+// Diapositiva 26: El Home redirige según si está logueado o no
 Route::get('/', [HomeController::class, 'getHome']);
 
-// Rutas de autenticación (comentadas por ahora, las usarás más adelante)
-// Route::get('/login', function () {
-//     return view('auth.login');
-// });
-// Route::post('/logout', function () {
-//     return redirect('/');
-// });
+// Diapositiva 25: Grupo de rutas protegidas por autenticación
+Route::middleware('auth')->group(function () {
+    
+    // Listado y detalle
+    Route::get('/catalog', [CatalogController::class, 'getIndex']);
+    Route::get('/catalog/show/{id}', [CatalogController::class, 'getShow']);
+    
+    // Diapositiva 27: Rutas para añadir películas
+    Route::get('/catalog/create', [CatalogController::class, 'getCreate']);
+    Route::post('/catalog/create', [CatalogController::class, 'postCreate']); // Para procesar el formulario
+    
+    // Diapositiva 27: Rutas para editar películas
+    Route::get('/catalog/edit/{id}', [CatalogController::class, 'getEdit']);
+    Route::put('/catalog/edit/{id}', [CatalogController::class, 'putEdit']); // Para procesar la actualización (PUT)
 
-// Rutas del catálogo
-Route::get('catalog', [CatalogController::class, 'getIndex']);
-Route::get('catalog/show/{id}', [CatalogController::class, 'getShow']);
-Route::get('catalog/create', [CatalogController::class, 'getCreate']);
-Route::get('catalog/edit/{id}', [CatalogController::class, 'getEdit']);
+    // Rutas del perfil (creadas por Breeze)
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Ruta opcional del Dashboard de Breeze (puedes borrarla si no la usas)
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+// Carga las rutas de login, registro, logout, etc.
+require __DIR__.'/auth.php';

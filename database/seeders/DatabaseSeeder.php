@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Movie; 
+use App\Models\Movie;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
@@ -194,5 +196,22 @@ class DatabaseSeeder extends Seeder
             $p->synopsis = $pelicula['synopsis'];
             $p->save();
         }
+        
+    }   
+    private function seedUsers()
+    {
+        DB::table('users')->delete(); 
+
+        User::create([
+            'name' => 'Usuario Test',
+            'email' => 'test@gmail.com',
+            'password' => Hash::make('12345678')
+        ]);
+
+        User::create([
+            'name' => 'ismael',
+            'email' => 'ismael@gmail.com',
+            'password' => Hash::make('12345678')
+        ]);
     }
 }
